@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IvanovPractic1BDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="IvanovPractic1BDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Dish_Type" EntityType="IvanovPractic1BDModel.Dish_Type" />
+    <EntitySet Name="Dishes" EntityType="IvanovPractic1BDModel.Dishes" />
+    <EntitySet Name="UsersData" EntityType="IvanovPractic1BDModel.UsersData" />
+    <AssociationSet Name="FK_Dishes_Dish_Type" Association="IvanovPractic1BDModel.FK_Dishes_Dish_Type">
+      <End Role="Dish_Type" EntitySet="Dish_Type" />
+      <End Role="Dishes" EntitySet="Dishes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Dish_Type">
+    <Key>
+      <PropertyRef Name="DishTypeID" />
+    </Key>
+    <Property Name="DishTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TypeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Dishes" Relationship="IvanovPractic1BDModel.FK_Dishes_Dish_Type" FromRole="Dish_Type" ToRole="Dishes" />
+  </EntityType>
+  <EntityType Name="Dishes">
+    <Key>
+      <PropertyRef Name="DishID" />
+    </Key>
+    <Property Name="DishID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CostPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="InStoplist" Type="Boolean" />
+    <Property Name="DishTypeID" Type="Int32" />
+    <NavigationProperty Name="Dish_Type" Relationship="IvanovPractic1BDModel.FK_Dishes_Dish_Type" FromRole="Dishes" ToRole="Dish_Type" />
+  </EntityType>
+  <EntityType Name="UsersData">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Balance" Type="Double" />
+  </EntityType>
+  <Association Name="FK_Dishes_Dish_Type">
+    <End Type="IvanovPractic1BDModel.Dish_Type" Role="Dish_Type" Multiplicity="0..1" />
+    <End Type="IvanovPractic1BDModel.Dishes" Role="Dishes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dish_Type">
+        <PropertyRef Name="DishTypeID" />
+      </Principal>
+      <Dependent Role="Dishes">
+        <PropertyRef Name="DishTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
